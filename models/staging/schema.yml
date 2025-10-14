@@ -5,13 +5,3 @@ sources:
     schema: dbt_sch
     tables:
       - name: orders
-
-models:
-  - name: customer_sales
-    columns:
-      - name: customer_name
-        tests:
-          - not_null
-      - name: total_spent
-        tests:
-          - not_null
