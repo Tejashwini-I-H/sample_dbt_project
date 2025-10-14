@@ -1,0 +1,1 @@
+select * from {{ref('customer_sales')}} cs where cs.total_spent > 500
