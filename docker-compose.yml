@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: dbt_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: my_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  dbt:
+    build: .
+    container_name: dbt_runner
+    depends_on:
+      - postgres
+    environment:
+      DBT_PROFILES_DIR: /usr/app
+    volumes:
+      - .:/usr/app
+    working_dir: /usr/app
+    entrypoint: ["dbt"]
+
+volumes:
+  pg_data:
